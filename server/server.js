@@ -17,11 +17,10 @@ var db = require('../db/db-config').db;
 db.authenticate()
 .then(function(){
   console.log('connected to db');
-/* use below code to delete links! 
+ // use below code to delete links! 
   // Link.findAll({
   //   where: {
-  //     owner: 'undefined',
-  //     assignee: 'undefined'
+  //     url: 'http://www.cnn.com/2016/09/29/africa/china-african-donkeys/index.html'
   //   }
   // })
   // .then(function(links){
@@ -29,8 +28,8 @@ db.authenticate()
   //     link.destroy();
   //   })
   // })
-*/
-  // Link.create({url: 'http://www.cnn.com/2016/10/02/politics/lebron-james-endorses-hillary-clinton/index.html', owner: '10105564501516258', assignee: '10154658058164363'})
+
+  // Link.create({url: 'http://www.cnn.com/2016/09/29/africa/china-african-donkeys/index.html', owner: '10154660869289363', assignee: '10154660869289363'})
   // .then(function(link){
   //   console.log('link created');
   // })

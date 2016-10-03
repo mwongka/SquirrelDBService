@@ -20,4 +20,6 @@ module.exports = function(app){
   //may need to modify endpoint below.. may just route to app.put/links?
   app.put('/links/friends/:friendid/:userid', helpers.putLinksFriend);
 
+  app.get('/search/:friend', helpers.searchFriends);
+
 }

@@ -223,4 +223,18 @@ module.exports = {
       res.send(link).sendStatus(201);
     })
   },
+
+  //search for users  //GHETTO
+  searchFriends: function(req, res, next) {
+    var search = req.params.friend;
+    console.log(search);
+    User.findAll({
+      where: {
+        fbname: search
+      }
+    })
+    .then((data)=>{
+      res.send(data);
+    })
+  }
 }
