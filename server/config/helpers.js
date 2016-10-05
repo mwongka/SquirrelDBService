@@ -8,35 +8,81 @@ var Tag = require('../../db/db-config').Tag;
 module.exports = {
   // test route for Postman and Mocha TDD
   test: function(req, res, next){
-    console.log(req, 'req test!');
+
     res.sendStatus(200);
+  },
+
+  signup: function(req, res, next) {
+    console.log(req.body, 'req body here');
+    const username = req.body.username;
+    const password = req.body.password;
+
+    User.findById(username)
+    .then(function(user){
+      if(user) {
+        res.send(404);
+      } else {
+        User.create({fbid: username, fbname: password})
+        .then(function(user){
+          res.send(user); //<=== working here
+        })
+      }
+    })
   },
 
   // user Login or create new user API //
   login: function(req, res, next){
-    console.log(req.body, req.params.userid, 'yololo');
-    var userID = req.body.userID;
-    var userName = req.body.name;
+
+    var userID = req.body.userID; //isthis now the unique username? 
+    var userName = req.body.name; //isthis now the unique password? 
     var avatar = req.body.avatar;
     
     User.findById(userID)
       .then(function(user){
         if(user){
-          console.log(user, 'checking here');
           res.send(user);
         } else {
           User.create({fbid: userID, fbname: userName, avatar: avatar})
             .then(function(user){
-              console.log(userName + ' added to database');
+
               res.send(user); //<=== working here
             })
         }
       })
       .catch(function(err){
-        console.log('login database err');
+
       })
   },
 
+  login2: function(req, res, next) {
+    const username = req.body.username;
+    const password = req.body.password;
+    
+    User.findById(username)
+    .then(function(user){
+      if(user && user.fbname === password) {
+        res.send(user);
+      } else {
+        res.send(404);
+      }
+    })
+  },
+
+  deserialize: function(req, res, next) {
+    var userID = req.body.username;
+
+    User.findById(userID)
+      .then(function(user){
+        if(user){
+          res.send(user);
+        } else {
+          res.send('not found')
+          }
+        })
+      .catch(function(err){
+        res.send(404);
+    })
+  },
   // user request API // 
   getLinks: function(req, res, next){
     const userID = req.params.userid;
@@ -46,7 +92,7 @@ module.exports = {
       // order: [['createdAt', 'DESC']],
     })
     .then(function(data){
-      console.log('please work', data)
+
       const mapped = data.map(function(curr){
         return curr.dataValues;
       });
@@ -75,7 +121,7 @@ module.exports = {
       });
       Promise.all(promises)
       .then((users) => {
-        console.log('user?', users);
+
         const assigneeReferenceObj = {}
          
          users.forEach(function(curr){
@@ -90,12 +136,12 @@ module.exports = {
             }
           }
          })
-        console.log('user2?', assigneeReferenceObj);
+
         res.send([data, assigneeReferenceObj]);
       })
     })
     .catch(function(err){
-      console.log('could not get Links from database: db error');
+
     });
   },
   //getUser Friends Links.. limit 10? //
@@ -106,16 +152,16 @@ module.exports = {
   putLinks: function(req, res, next){
 
     var userID = req.params.userid;
-    console.log('Saving',req.body.url);
+
     Link.create({url: req.body.url, owner: userID, assignee: userID})
       .then(function(link){
-        console.log(link);
-        console.log('new link saved in putLinks');
+
+
         res.sendStatus(201);
         //should we be sending back the link to user for any reason? 
       })
       .catch(function(err){
-        console.log('new link could not be saved in putLinks');
+
       })
   },
   // delete specific link from user //
@@ -139,7 +185,7 @@ module.exports = {
       res.send('link deleted');
     })
     .catch(function(err){
-      console.log('delete Links service error');
+
     })
   },
 
@@ -155,15 +201,15 @@ module.exports = {
         return {fbid:friend.fbid, fbname:friend.fbname, avatar:friend.avatar};
       })
 
-      console.log(mappedFriends, 'mappedFriends Yolo')
+
       return mappedFriends;
     })
     .then(function(friendsArray){
-      console.log(friendsArray, 'friendsArray Yolo')
+
       var promiseArray = [];
       friendsArray.forEach(function(friend){
         var updatedFriend = friend;
-        console.log(friend.fbid, 'friend.fbid');
+
         var promise = new Promise(function(resolve,reject){
           Link.findAll({
             where: {owner: friend.fbid, assignee: friend.fbid}
@@ -180,13 +226,13 @@ module.exports = {
 
       Promise.all(promiseArray)
       .then((values)=> {
-        console.log(values, 'please for the love of god work!')
+
         res.send(values);
       })
     })
     .catch(function(err){
       res.send({friends:[]})
-      console.log('could not get friends from db. DB error');
+
     })
   },
 
@@ -224,14 +270,14 @@ module.exports = {
 
   //put new link into friends folder
   putLinksFriend: function(req, res, next){
-    console.log('adding link to friend');
+
     var userID = req.params.userid;
     var friendID = req.params.friendid;
     var url = req.body.link;
 
     Link.create({url:url, owner:friendID, assignee:userID})
     .then(function(link){
-      console.log('You added a link for your friend!');
+
       res.send(link).sendStatus(201);
     })
   },
@@ -239,7 +285,7 @@ module.exports = {
   //search for users  //GHETTO
   searchFriends: function(req, res, next) {
     var search = req.params.friend;
-    console.log(search);
+
     User.findAll({
       where: {
         fbname: search
@@ -283,7 +329,7 @@ module.exports = {
         })
       })
       .catch(function(err){
-        console.log('putLike error in database helpers.js');
+
       })
   }
 }

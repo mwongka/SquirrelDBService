@@ -18,18 +18,18 @@ db.authenticate()
 .then(function(){
   console.log('connected to db');
 
-  User.findOne({
-    where: {
-      fbid: '10105564501516258'
-    }
-  })
-  .then(function(guy) {
-    User.create({fbid: '10154660869289363', fbname: 'Jordan Taylor', avatar: 'https://scontent.fsnc1-1.fna.fbcdn.net/v/t1.0-1/p320x320/13592162_10154405816284363_2728511714196473_n.jpg?oh=b76da1d3155fb55208c9bafddfbb4ac6&oe=586FBF09'})
-    .then(function(jordan) {
-      guy.addFriend(jordan);
-      console.log('jordan is now your friend');
-    })
-  })
+  // User.findOne({
+  //   where: {
+  //     fbid: '10105564501516258'
+  //   }
+  // })
+  // .then(function(guy) {
+  //   User.create({fbid: '10154660869289363', fbname: 'Jordan Taylor', avatar: 'https://scontent.fsnc1-1.fna.fbcdn.net/v/t1.0-1/p320x320/13592162_10154405816284363_2728511714196473_n.jpg?oh=b76da1d3155fb55208c9bafddfbb4ac6&oe=586FBF09'})
+  //   .then(function(jordan) {
+  //     guy.addFriend(jordan);
+  //     console.log('jordan is now your friend');
+  //   })
+  // })
   // HOW TO GET ALL THE LIKES OF A PARTICULAR LINK!
   // Link.findOne({
   //   where: {
@@ -44,6 +44,12 @@ db.authenticate()
   //   })
   // })
   
+  // User.create({fbid:'mwongka', fbname:'1234'})
+  // .then(function(user){
+  //   console.log(user);
+  // })
+
+
  // use below code to delete links! 
   // Link.findOne({
   //   where: {
@@ -60,10 +66,10 @@ db.authenticate()
   //   });
   // });
 
-  Link.create({url: 'http://www.cnn.com/2016/10/03/middleeast/isis-attack-kurdish-wedding-party-syria/index.html', owner: '10154660869289363', assignee: '10154660869289363'})
-  .then(function(link){
-    console.log('link created');
-  })
+  // Link.create({url: 'http://www.cnn.com/2016/10/03/middleeast/isis-attack-kurdish-wedding-party-syria/index.html', owner: '10154660869289363', assignee: '10154660869289363'})
+  // .then(function(link){
+  //   console.log('link created');
+  // })
 
  //  User.findById('10154660869289363')
  //    .then(function(user){

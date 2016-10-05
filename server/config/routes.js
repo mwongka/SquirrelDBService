@@ -4,7 +4,13 @@ module.exports = function(app){
 
   app.get('/test', helpers.test);
 
+  app.post('/signup', helpers.signup);
+
   app.post('/login/:userid', helpers.login);
+
+  app.post('/login2', helpers.login2);
+
+  app.post('/deserialize', helpers.deserialize);
 
   app.get('/links/:userid', helpers.getLinks);
 
