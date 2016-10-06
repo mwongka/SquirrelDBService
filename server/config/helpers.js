@@ -32,9 +32,9 @@ module.exports = {
 
   // user Login or create new user API //
   login: function(req, res, next){
-
-    var userID = req.body.userID; //isthis now the unique username? 
-    var userName = req.body.name; //isthis now the unique password? 
+    console.log('you are in login api');
+    var userID = req.body.username; //isthis now the unique username? 
+    var userName = req.body.password; //isthis now the unique password? 
     var avatar = req.body.avatar;
     
     User.findById(userID)
@@ -44,7 +44,6 @@ module.exports = {
         } else {
           User.create({fbid: userID, fbname: userName, avatar: avatar})
             .then(function(user){
-
               res.send(user); //<=== working here
             })
         }
@@ -57,7 +56,7 @@ module.exports = {
   login2: function(req, res, next) {
     const username = req.body.username;
     const password = req.body.password;
-    
+
     User.findById(username)
     .then(function(user){
       if(user && user.fbname === password) {
