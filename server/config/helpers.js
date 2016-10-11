@@ -8,12 +8,8 @@ var Tag = require('../../db/db-config').Tag;
 module.exports = {
   // test route for Postman and Mocha TDD
   getMostRecent: function(req, res, next) {
-<<<<<<< 06d63f9d89b838b986512d25dab6aa5f91d3caed
-||||||| merged common ancestors
     console.log('testtest!>>>>>>>>>>>>>>>>>>>>>>>>>');
-=======
     // console.log('testtest!>>>>>>>>>>>>>>>>>>>>>>>>>');
->>>>>>> merge
     Link.findAll({limit: 20, order: 'createdAt DESC'})
       .then(function(data) {
         console.log('give me redis data!');
@@ -21,8 +17,17 @@ module.exports = {
       }).catch(function(error) {
         console.log('Error in finding data for redis D=');
       });
+    },
+  test: function(req, res, next){
+    console.log('TEST')
+    res.end("TESTED");
   },
-
+  posttest: function(req,res,next){
+    console.log('params',req.params);
+    console.log('data',req.data);
+    console.log('body',req.body)
+    res.send('GOT HERE');
+  },
   signup: function(req, res, next) {
     console.log('in sign up');
     const username = req.body.username;
@@ -96,15 +101,8 @@ module.exports = {
       });
   },
   // user request API // 
-<<<<<<< 06d63f9d89b838b986512d25dab6aa5f91d3caed
-  getLinks: function(req, res, next) {
-    // console.log('YOOOLOOOOOOOOOOOOOOOO');
-||||||| merged common ancestors
-  getLinks: function(req, res, next){
-=======
   getLinks: function(req, res, next){
     console.log('are you in getLinks?>>>>>>>>>>');
->>>>>>> merge
     const userID = req.params.userid;
     const promises = [];
 
@@ -326,6 +324,12 @@ module.exports = {
     .then((data)=>{
       res.send(data);
     });
+  },
+  test:function(req,res,next){
+    console.log('query',req.query)
+    console.log('body',req.body);
+    console.log('params',req.params);
+    res.end('Reached test',req.body);
   },
 
   //add Like for specific link. (One user can like a specific Link ID ONCE ONLY)

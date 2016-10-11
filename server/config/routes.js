@@ -4,6 +4,12 @@ module.exports = function(app) {
 
   app.get('/redis', helpers.getMostRecent);
 
+  app.get('/test/:first', helpers.test);
+
+  app.post('/posttest',helpers.posttest);
+
+  app.post('/test',helpers.posttest);
+
   app.post('/signup', helpers.signup);
   // below route can be used for facbeook OAuth:
   app.post('/login/:userid', helpers.login);
@@ -33,3 +39,4 @@ module.exports = function(app) {
   app.put('/likes', helpers.putLike);
 
 };
+ 

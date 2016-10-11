@@ -3,12 +3,15 @@ var keys = require('./keys');
 
 //we will eventually need to set environmental variables for all the input fields below
 //NEED TO CHANGE THIS TO POINT TO LOCAL MYSQL
-var db = new Sequelize('squirrel', keys.aws.username, keys.aws.password, {
+//need to set up a bunch of AWS servers here and redirect based on fbid
+var db = new Sequelize('Squirrel2', keys.aws.username, keys.aws.password, {
   host: keys.aws.host, // <==== how to set host with many instances of db? 
   dialect: 'mysql',
   dialectOptions: '{{path}}amazon-rds-ca-cert.pem',
   port: '3306',
 })
+
+
 
 var Link = require('./models/link')(db);
 var User = require('./models/user')(db);
