@@ -1,8 +1,8 @@
 var helpers = require('./helpers');
 
-module.exports = function(app){
+module.exports = function(app) {
 
-  app.get('/test', helpers.test);
+  app.get('/redis', helpers.getMostRecent);
 
   app.post('/signup', helpers.signup);
   // below route can be used for facbeook OAuth:
@@ -32,4 +32,4 @@ module.exports = function(app){
 
   app.put('/likes', helpers.putLike);
 
-}
+};

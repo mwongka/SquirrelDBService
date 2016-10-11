@@ -15,21 +15,11 @@ var Category = require('../db/db-config').Category;
 var db = require('../db/db-config').db;
 
 db.authenticate()
-.then(function(){
+.then(function() {
   console.log('connected to db');
 
-  // User.findOne({
-  //   where: {
-  //     fbid: '10105564501516258'
-  //   }
-  // })
-  // .then(function(guy) {
-  //   User.create({fbid: '10154660869289363', fbname: 'Jordan Taylor', avatar: 'https://scontent.fsnc1-1.fna.fbcdn.net/v/t1.0-1/p320x320/13592162_10154405816284363_2728511714196473_n.jpg?oh=b76da1d3155fb55208c9bafddfbb4ac6&oe=586FBF09'})
-  //   .then(function(jordan) {
-  //     guy.addFriend(jordan);
-  //     console.log('jordan is now your friend');
-  //   })
-  // })
+})
+
   // HOW TO GET ALL THE LIKES OF A PARTICULAR LINK!
   // Link.findOne({
   //   where: {
@@ -79,7 +69,7 @@ db.authenticate()
  //        user.addFriend(user2);
  //      })
  //    })
-})
+// })
 .catch(function(err){
   console.log('sequelize connection error');
 });
@@ -126,6 +116,6 @@ routes(app);
 //set env variables 
 var port = process.env.PORT || 8888;
 
-app.listen(port, function(){
+app.listen(port, function() {
   console.log('app listening on port ' + port);
-})
+});
