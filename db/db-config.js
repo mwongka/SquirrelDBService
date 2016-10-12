@@ -17,7 +17,12 @@ keys.dbs.forEach(function(db){
   )
 })
 
-var db = global.connections[1];
+var db = new Sequelize(keys.aws.dbname, keys.aws.username, keys.aws.password, {
+      host: keys.aws.host, // <==== how to set host with many instances of db? 
+      dialect: 'mysql',
+      dialectOptions: '{{path}}amazon-rds-ca-cert.pem',
+      port: '3306',
+    })
 
 
 // var db = new Sequelize('squirrel', keys.aws.username, keys.aws.password, {
@@ -40,16 +45,17 @@ connections.forEach(function(db){
     Tag:require('./models/tag')(db)
   })
 })
-console.log('here');
-if(!global.currentdb){
-  global.currentdb = global.schemas[0];
+//console.log('here');
+if(global.currentdb === undefined){
+  console.log('REDEFINED');
+  global.currentdb = global.schemas[1];
 }
 
-global.Link = global.schemas[0].Link
-global.User = global.schemas[0].User
-global.Category = global.schemas[0].Category
-global.Like = global.schemas[0].Like
-global.Tag = global.schemas[0].Tag
+global.Link = global.currentdb.Link
+global.User = global.currentdb.User
+global.Category = global.currentdb.Category
+global.Like = global.currentdb.Like
+global.Tag = global.currentdb.Tag
 // var FriendShip = require('./models/friend')(db);
 
 // set up relationship

@@ -21,7 +21,7 @@ db.authenticate()
 
   global.User.findOne({
     where: {
-      fbname: 'FAKEPASSWORDSM'
+      fbname: 'FAKEPASSWORDSMS'
     }
   })
   .then(function(guy) {

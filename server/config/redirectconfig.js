@@ -7,10 +7,9 @@ function forwardrequests(req,res,next){
 	var dbindex = hash(loginname);
 	//console.log('INDEX',dbindex);
 	global.currentdb = global.schemas[dbindex];
-	//console.log(global.currentdb)
-	require('./helpers.js');
-	var helpers = require('./helpers.js');
-	console.log(helpers);
+	console.log(global.currentdb)
+	// require('./helpers.js');
+	// var helpers = require('./helpers.js');
 	global.Link = global.currentdb.Link;
 	global.User = global.currentdb.User;
 	global.Category = global.currentdb.Category;
@@ -59,41 +58,41 @@ function forwardrequests(req,res,next){
 
 
 
-	  global.app.get('/test/:first', helpers.test);
+	  // global.app.get('/test/:first', helpers.test);
 
-	  global.app.post('/posttest',helpers.posttest);
+	  // global.app.post('/posttest',helpers.posttest);
 
-	  global.app.post('/test',helpers.posttest);
+	  // global.app.post('/test',helpers.posttest);
 
-	  global.app.post('/signup', helpers.signup);
+	  // global.app.post('/signup', helpers.signup);
 
-	  global.app.post('/login/:userid', helpers.login);
+	  // global.app.post('/login/:userid', helpers.login);
 
-	  global.app.post('/login2', helpers.login2);
+	  // global.app.post('/login2', helpers.login2);
 
-	  global.app.post('/deserialize', helpers.deserialize);
+	  // global.app.post('/deserialize', helpers.deserialize);
 
-	  global.app.get('/links/:userid', helpers.getLinks);
+	  // global.app.get('/links/:userid', helpers.getLinks);
 
-	  global.app.get('/links/friends/:friendid', helpers.getFriendsLinks);
+	  // global.app.get('/links/friends/:friendid', helpers.getFriendsLinks);
 
-	  global.app.put('/links/:userid', helpers.putLinks);
+	  // global.app.put('/links/:userid', helpers.putLinks);
 
-	  global.app.delete('/links/:userid', helpers.deleteLinks);
+	  // global.app.delete('/links/:userid', helpers.deleteLinks);
 
-	  global.app.get('/friends/:userid', helpers.friendsGet);
+	  // global.app.get('/friends/:userid', helpers.friendsGet);
 
-	  global.app.get('/friends/nameOnly/:userid', helpers.friendsGetNameOnly);
+	  // global.app.get('/friends/nameOnly/:userid', helpers.friendsGetNameOnly);
 
-	  global.app.put('/friends/:userid', helpers.friendsPut);
-	  //may need to modify endpoint below.. may just route to app.put/links?
-	  global.app.put('/links/friends/:friendid/:userid', helpers.putLinksFriend);
+	  // global.app.put('/friends/:userid', helpers.friendsPut);
+	  // //may need to modify endpoint below.. may just route to app.put/links?
+	  // global.app.put('/links/friends/:friendid/:userid', helpers.putLinksFriend);
 
-	  global.app.get('/search/:friend', helpers.searchFriends);
+	  // global.app.get('/search/:friend', helpers.searchFriends);
 
-	  global.app.put('/likes', helpers.putLike);
+	  // global.app.put('/likes', helpers.putLike);
 
-	  global.app.get('/test',helpers.test)
+	  // global.app.get('/test',helpers.test)
 
 
 
