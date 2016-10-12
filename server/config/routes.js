@@ -2,6 +2,8 @@ var helpers = require('./helpers');
 
 
 module.exports = function(app){
+  global.app = app;
+  
   app.use(require('./redirectconfig.js'));
   app.get('/redis', helpers.getMostRecent);
 

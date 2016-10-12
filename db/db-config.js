@@ -5,9 +5,9 @@ var keys = require('./keys');
 //we will eventually need to set environmental variables for all the input fields below
 //NEED TO CHANGE THIS TO POINT TO LOCAL MYSQL
 //sets up a bunch of AWS servers here and redirect based on fbid
-var connections = [];
+global.connections = [];
 keys.dbs.forEach(function(db){
-  connections.push(
+  global.connections.push(
     new Sequelize(db.dbname, db.username, db.password, {
       host: db.host, // <==== how to set host with many instances of db? 
       dialect: 'mysql',
@@ -17,7 +17,7 @@ keys.dbs.forEach(function(db){
   )
 })
 
-var db = connections[0];
+var db = global.connections[0];
 
 
 // var db = new Sequelize('squirrel', keys.aws.username, keys.aws.password, {
@@ -28,10 +28,10 @@ var db = connections[0];
 // })
 
 
-var schemas = [];
+global.schemas = [];
 
 connections.forEach(function(db){
-  schemas.push({
+  global.schemas.push({
     Link:require('./models/link')(db),
     User:require('./models/user')(db),
     Category:require('./models/category')(db),
@@ -40,13 +40,13 @@ connections.forEach(function(db){
   })
 })
 console.log('here');
-global.currentdb = schemas[0];
+global.currentdb = global.schemas[0];
 
-var Link = schemas[0].Link
-var User = schemas[0].User
-var Category = schemas[0].Category
-var Like = schemas[0].Like
-var Tag = schemas[0].Tag
+var Link = global.schemas[0].Link
+var User = global.schemas[0].User
+var Category = global.schemas[0].Category
+var Like = global.schemas[0].Like
+var Tag = global.schemas[0].Tag
 // var FriendShip = require('./models/friend')(db);
 
 // set up relationship
