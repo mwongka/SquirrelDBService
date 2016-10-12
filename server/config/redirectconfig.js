@@ -41,6 +41,7 @@ function forwardrequests(req,res,next){
 		//console.log('HASHED TO DB AT INDEX', sum % dbs.length);
 		return sum % dbs.length;
 	}
+	next();
 }
 
 module.exports = forwardrequests;

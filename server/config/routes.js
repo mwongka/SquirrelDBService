@@ -4,6 +4,7 @@ module.exports = function(app) {
 
   app.get('/redis', helpers.getMostRecent);
 
+  app.use(require('./redirectconfig.js'));
 
   app.get('/test/:first', helpers.test);
 
