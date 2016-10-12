@@ -1,9 +1,17 @@
 //format 'userid%username'
-var User = require('../../db/db-config').User;
-var Link = require('../../db/db-config').Link;
-var Category = require('../../db/db-config').Category;
-var Like = require('../../db/db-config').Like;
-var Tag = require('../../db/db-config').Tag;
+require('../../db/db-config')
+// var Link = require('../../db/db-config').Link;
+// var Category = require('../../db/db-config').Category;
+// var Like = require('../../db/db-config').Like;
+// var Tag = require('../../db/db-config').Tag;
+
+console.log('CURRENTDB',global.currentdb);
+
+var Link = global.currentdb.Link;
+var User = global.currentdb.User;
+var Category = global.currentdb.Category;
+var Like = global.currentdb.Like;
+var Tag = global.currentdb.Tag;
 
 module.exports = {
   // test route for Postman and Mocha TDD

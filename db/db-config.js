@@ -39,6 +39,8 @@ connections.forEach(function(db){
     Tag:require('./models/tag')(db)
   })
 })
+console.log('here');
+global.currentdb = schemas[0];
 
 var Link = schemas[0].Link
 var User = schemas[0].User

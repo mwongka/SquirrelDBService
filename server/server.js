@@ -27,7 +27,7 @@ db.authenticate()
     // .then(function(user){
     //   console.log(user);
     // })
-    console.log(guy);
+   console.log(guy);
   })
   console.log('connected to db');
 })
