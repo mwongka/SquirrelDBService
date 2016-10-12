@@ -5,9 +5,9 @@ function forwardrequests(req,res,next){
 	//console.log('LoginNameis',loginname);
 	//console.log('LENGTH',global.schemas.length)
 	var dbindex = hash(loginname);
-	//console.log('INDEX',dbindex);
+	console.log('INDEX',dbindex);
 	global.currentdb = global.schemas[dbindex];
-	console.log(global.currentdb)
+	//console.log(global.currentdb)
 	// require('./helpers.js');
 	// var helpers = require('./helpers.js');
 	global.Link = global.currentdb.Link;

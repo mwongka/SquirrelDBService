@@ -17,12 +17,12 @@ keys.dbs.forEach(function(db){
   )
 })
 
-var db = new Sequelize(keys.aws.dbname, keys.aws.username, keys.aws.password, {
-      host: keys.aws.host, // <==== how to set host with many instances of db? 
-      dialect: 'mysql',
-      dialectOptions: '{{path}}amazon-rds-ca-cert.pem',
-      port: '3306',
-    })
+// var db = new Sequelize(keys.aws.dbname, keys.aws.username, keys.aws.password, {
+//       host: keys.aws.host, // <==== how to set host with many instances of db? 
+//       dialect: 'mysql',
+//       dialectOptions: '{{path}}amazon-rds-ca-cert.pem',
+//       port: '3306',
+//     })
 
 
 // var db = new Sequelize('squirrel', keys.aws.username, keys.aws.password, {
@@ -37,7 +37,7 @@ global.schemas = [];
 
 connections.forEach(function(db){
   global.schemas.push({
-    DB: db.config,
+    DB: db,
     Link:require('./models/link')(db),
     User:require('./models/user')(db),
     Category:require('./models/category')(db),
@@ -49,6 +49,7 @@ connections.forEach(function(db){
 if(global.currentdb === undefined){
   console.log('REDEFINED');
   global.currentdb = global.schemas[1];
+ // console.log(global.schemas[0]);
 }
 
 global.Link = global.currentdb.Link
@@ -80,11 +81,11 @@ global.User.hasMany(Like, {as: 'UserLikes'}); // should allow us to get all like
 global.User.belongsToMany(User, {as: 'friend', through: 'friendship'}); // can i specify through: Friend Model?
 
 // export db and models for use in other modules 
-module.exports = {
-  db: db
-  // Link: Link,
-  // User: User,
-  // Tag: Tag,
-  // Like: Like,
-  // Category: Category,
-}
+// module.exports = {
+//   db: db
+//   // Link: Link,
+//   // User: User,
+//   // Tag: Tag,
+//   // Like: Like,
+//   // Category: Category,
+// }

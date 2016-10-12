@@ -14,18 +14,20 @@ var Like = require('../db/db-config').Like;
 var Category = require('../db/db-config').Category;
 
 //instantiate db ORM
-var db = require('../db/db-config').db;
+//var db = require('../db/db-config').db;
 
-db.authenticate()
-.then(function() {
+
+global.currentdb.DB.authenticate()
+.then(function(){
+  console.log('connected to db');
 
   global.User.findOne({
     where: {
-      fbname: 'FAKEPASSWORDSMS'
+      fbname: 'FAKEPASSWORDSMSPVD'
     }
   })
   .then(function(guy) {
-    // User.create({fbid:'TESTINGMULTIDBagain', fbname:'12345'})
+    // global.User.create({fbid:'TESTINGMULTIDBagain', fbname:'12345'})
     // .then(function(user){
     //   console.log(user);
     // })

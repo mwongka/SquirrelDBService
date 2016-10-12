@@ -44,12 +44,15 @@ module.exports = {
     console.log(req.body, 'req body here');
     const username = req.body.username;
     const password = req.body.password;
+    console.log('username',username,'pword',password)
 
     global.User.findById(username)
     .then(function(user){
+      console.log('USER',user);
       if(user) {
         res.send(404);
       } else {
+        console.log('CREATING');
         global.User.create({fbid: username, fbname: password})
         .then(function(user){
           res.send(user); //<=== working here
