@@ -16,9 +16,22 @@ var db = require('../db/db-config').db;
 
 db.authenticate()
 .then(function() {
-  console.log('connected to db');
 
+  User.findOne({
+    where: {
+      fbname: '12345'
+    }
+  })
+  .then(function(guy) {
+    // User.create({fbid:'TESTINGMULTIDBagain', fbname:'12345'})
+    // .then(function(user){
+    //   console.log(user);
+    // })
+    console.log(guy);
+  })
+  console.log('connected to db');
 })
+
 
   // HOW TO GET ALL THE LIKES OF A PARTICULAR LINK!
   // Link.findOne({
@@ -82,29 +95,29 @@ as well as to add relational sequelize methods to it's model instances!
 A few intances will be created every time to test the database */
     // COMMENT THIS OUT LATER
 
-      db.sync({force: true})
-        .then(function(){
-          console.log('sycn success!');
-          User.create({fbid: '928374', fbname: 'Michael Wong'})
-            .then(function(user){
-              User.create({fbid: 'ast294r', fbname:'Squirrel'})
-              .then(function(user2){
-                user.addFriend(user2);
-                // Link.create({url:"www.test.com", owner:user.fbid, assignee:user2.fbid})
-                // .then(function(link){
-                //   console.log('link saved!');
-                //   Like.create({like: true})
-                //   .then(function(like){
-                //     console.log('like instance created');
-                //   })
-                // })
-              })  
-              console.log('users saved');
-            })
-        })
-        .catch(function(err){
-          console.log(err, 'could not sync');
-        }); // <=== force sync to refresh
+      // db.sync({force: true})
+      //   .then(function(){
+      //     console.log('sycn success!');
+      //     User.create({fbid: '928374', fbname: 'Michael Wong'})
+      //       .then(function(user){
+      //         User.create({fbid: 'ast294r', fbname:'Squirrel'})
+      //         .then(function(user2){
+      //           user.addFriend(user2);
+      //           // Link.create({url:"www.test.com", owner:user.fbid, assignee:user2.fbid})
+      //           // .then(function(link){
+      //           //   console.log('link saved!');
+      //           //   Like.create({like: true})
+      //           //   .then(function(like){
+      //           //     console.log('like instance created');
+      //           //   })
+      //           // })
+      //         })  
+      //         console.log('users saved');
+      //       })
+      //   })
+      //   .catch(function(err){
+      //     console.log(err, 'could not sync');
+      //   }); // <=== force sync to refresh
 
 //connect middleware
 app.use(cors());
@@ -115,7 +128,7 @@ app.use(bodyParser.json());
 routes(app);
 
 //set env variables 
-var port = process.env.PORT || 8889;
+var port = process.env.PORT || 8888;
 
 app.listen(port, function() {
   console.log('app listening on port ' + port);
