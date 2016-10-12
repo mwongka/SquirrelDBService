@@ -17,7 +17,7 @@ keys.dbs.forEach(function(db){
   )
 })
 
-var db = connections[0]
+var db = connections[0];
 
 
 // var db = new Sequelize('squirrel', keys.aws.username, keys.aws.password, {
@@ -28,6 +28,17 @@ var db = connections[0]
 // })
 
 
+var schemas = [];
+
+connections.forEach(function(db){
+  schemas.push({
+    Link:require('./models/link')(db),
+    User:require('./models/user')(db),
+    Category:require('./models/category')(db),
+    Like:require('./models/like')(db),
+    Tag:require('./models/tag')(db)
+  })
+})
 
 var Link = require('./models/link')(db);
 var User = require('./models/user')(db);
