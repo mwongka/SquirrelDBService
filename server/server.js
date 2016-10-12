@@ -19,7 +19,7 @@ db.authenticate()
 
   User.findOne({
     where: {
-      fbname: '12345'
+      fbname: 'FAKEPASSWORD'
     }
   })
   .then(function(guy) {

@@ -2,11 +2,11 @@ function forwardrequests(req,res,next){
 	var userid = req.url.split('/')[req.url.split('/').length - 1]
 	var loginname = req.body.username || req.body.userId || req.params.userid || userid;
 	console.log('LoginNameis',loginname);
-	var dbindex = hash(loginname);
-	var url = dbs[dbindex] + req.url;
-	console.log('url',url);
-	var method = req.method;
-	var data = req.data || {};
+	// var dbindex = hash(loginname);
+	// var url = dbs[dbindex] + req.url;
+	// console.log('url',url);
+	// var method = req.method;
+	// var data = req.data || {};
 
 	// switch(method){
 	// 	case 'GET':
