@@ -1,4 +1,5 @@
 function forwardrequests(req,res,next){
+	console.log('HERHER')
 	var userid = req.url.split('/')[req.url.split('/').length - 1]
 	var loginname = req.body.username || req.body.userId || req.params.userid || userid;
 	console.log('LoginNameis',loginname);
@@ -6,6 +7,7 @@ function forwardrequests(req,res,next){
 	var dbindex = hash(loginname);
 	console.log('INDEX',dbindex);
 	global.currentdb = global.schemas[dbindex];
+	console.log(global.currentdb)
 	var helpers = require('./helpers');
 	// var url = dbs[dbindex] + req.url;
 	// console.log('url',url);

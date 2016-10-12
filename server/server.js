@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var routes = require('./config/routes');
 var Sequelize = require('sequelize');
 var cors = require('cors');
+//app.use(require('config/routes.js'))
 
 //== test data base ===//
 var User = require('../db/db-config').User;
@@ -11,6 +12,7 @@ var Link = require('../db/db-config').Link;
 var Tag = require('../db/db-config').Tag;
 var Like = require('../db/db-config').Like;
 var Category = require('../db/db-config').Category;
+
 //instantiate db ORM
 var db = require('../db/db-config').db;
 

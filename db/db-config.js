@@ -32,6 +32,7 @@ global.schemas = [];
 
 connections.forEach(function(db){
   global.schemas.push({
+    DB: db.config,
     Link:require('./models/link')(db),
     User:require('./models/user')(db),
     Category:require('./models/category')(db),
