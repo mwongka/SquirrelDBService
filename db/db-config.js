@@ -40,11 +40,11 @@ connections.forEach(function(db){
   })
 })
 
-var Link = require('./models/link')(db);
-var User = require('./models/user')(db);
-var Category = require('./models/category')(db);
-var Like = require('./models/like')(db);
-var Tag = require('./models/tag')(db);
+var Link = schemas[0].Link
+var User = schemas[0].User
+var Category = schemas[0].Category
+var Like = schemas[0].Like
+var Tag = schemas[0].Tag
 // var FriendShip = require('./models/friend')(db);
 
 // set up relationship
