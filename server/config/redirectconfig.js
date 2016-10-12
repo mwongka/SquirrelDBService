@@ -1,14 +1,21 @@
 function forwardrequests(req,res,next){
-	console.log('HERHER')
+	//console.log('HERHER')
 	var userid = req.url.split('/')[req.url.split('/').length - 1]
 	var loginname = req.body.username || req.body.userId || req.params.userid || userid;
-	console.log('LoginNameis',loginname);
-	console.log('LENGTH',global.schemas.length)
+	//console.log('LoginNameis',loginname);
+	//console.log('LENGTH',global.schemas.length)
 	var dbindex = hash(loginname);
-	console.log('INDEX',dbindex);
+	//console.log('INDEX',dbindex);
 	global.currentdb = global.schemas[dbindex];
-	console.log(global.currentdb)
-	var helpers = require('./helpers');
+	//console.log(global.currentdb)
+	require('./helpers.js');
+	var helpers = require('./helpers.js');
+	console.log(helpers);
+	global.Link = global.currentdb.Link;
+	global.User = global.currentdb.User;
+	global.Category = global.currentdb.Category;
+	global.Like = global.currentdb.Like;
+	global.Tag = global.currentdb.Tag;
 	// var url = dbs[dbindex] + req.url;
 	// console.log('url',url);
 	// var method = req.method;
@@ -66,7 +73,7 @@ function forwardrequests(req,res,next){
 
 	  global.app.post('/deserialize', helpers.deserialize);
 
-	 global.app.get('/links/:userid', helpers.getLinks);
+	  global.app.get('/links/:userid', helpers.getLinks);
 
 	  global.app.get('/links/friends/:friendid', helpers.getFriendsLinks);
 

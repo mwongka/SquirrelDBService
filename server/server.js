@@ -19,9 +19,9 @@ var db = require('../db/db-config').db;
 db.authenticate()
 .then(function() {
 
-  User.findOne({
+  global.User.findOne({
     where: {
-      fbname: 'FAKEPASSWORD'
+      fbname: 'FAKEPASSWORDSM'
     }
   })
   .then(function(guy) {

@@ -5,13 +5,14 @@ require('../../db/db-config')
 // var Like = require('../../db/db-config').Like;
 // var Tag = require('../../db/db-config').Tag;
 
+console.log('HERE');
 console.log('CURRENTDB',global.currentdb);
 
-var Link = global.currentdb.Link;
-var User = global.currentdb.User;
-var Category = global.currentdb.Category;
-var Like = global.currentdb.Like;
-var Tag = global.currentdb.Tag;
+global.Link = global.currentdb.Link;
+global.User = global.currentdb.User;
+global.Category = global.currentdb.Category;
+global.Like = global.currentdb.Like;
+global.Tag = global.currentdb.Tag;
 
 module.exports = {
   // test route for Postman and Mocha TDD
@@ -37,19 +38,20 @@ module.exports = {
     res.send('GOT HERE');
   },
   signup: function(req, res, next) {
-    console.log('in sign up');
+    // console.log('SIGNED UP');
+    // console.log('prKeys',User.primaryKeys);
+    // console.log('attr',User.attributes);
+    console.log(req.body, 'req body here');
     const username = req.body.username;
     const password = req.body.password;
 
-    User.findById(username)
-    .then(function(user) {
-      if (user) {
-        console.log('user already exists');
-        res.sendStatus(404);
+    global.User.findById(username)
+    .then(function(user){
+      if(user) {
+        res.send(404);
       } else {
-        console.log('user does not exist yet');
-        User.create({fbid: username, fbname: password})
-        .then(function(user) {
+        global.User.create({fbid: username, fbname: password})
+        .then(function(user){
           res.send(user); //<=== working here
         });
       }
@@ -63,13 +65,13 @@ module.exports = {
     const userName = req.body.password; //isthis now the unique password? 
     const avatar = req.body.avatar;
     
-    User.findById(userID)
-      .then(function(user) {
-        if (user) {
+    global.User.findById(userID)
+      .then(function(user){
+        if(user){
           res.send(user);
         } else {
-          User.create({fbid: userID, fbname: userName, avatar: avatar})
-            .then(function(user) {
+          global.User.create({fbid: userID, fbname: userName, avatar: avatar})
+            .then(function(user){
               res.send(user); //<=== working here
             });
         }
@@ -82,10 +84,10 @@ module.exports = {
   login2: function(req, res, next) {
     const username = req.body.username;
     const password = req.body.password;
-    
-    User.findById(username)
-    .then(function(user) {
-      if (user && user.fbname === password) {
+
+    global.User.findById(username)
+    .then(function(user){
+      if(user && user.fbname === password) {
         res.send(user);
       } else {
         res.send(404);
@@ -96,9 +98,9 @@ module.exports = {
   deserialize: function(req, res, next) {
     var userID = req.body.username;
 
-    User.findById(userID)
-      .then(function(user) {
-        if (user) {
+    global.User.findById(userID)
+      .then(function(user){
+        if(user){
           res.send(user);
         } else {
           res.send('not found');
@@ -114,7 +116,7 @@ module.exports = {
     const userID = req.params.userid;
     const promises = [];
 
-    Link.findAll({where: {owner: userID, },
+    global.Link.findAll({where:{owner: userID,},
       // order: [['createdAt', 'DESC']],
     })
     .then(function(data) {
@@ -127,7 +129,7 @@ module.exports = {
     .then((data) => {
       const addPromise = function(id) {
         return new Promise((res, rej) => {
-          User.findById(id)
+          global.User.findById(id)
           .then((user)=>{
             if (user) {
               const userObj = {[user.fbid]: user.fbname, avatar: user.avatar};
@@ -174,7 +176,7 @@ module.exports = {
   getFriendsLinks: function(req, res, next) {
     var friendID = req.params.friendid;
 
-    Link.findAll({
+    global.Link.findAll({
       where: {
         owner: friendID,
         assignee: friendID,
@@ -192,10 +194,8 @@ module.exports = {
 
     var userID = req.params.userid;
 
-    Link.create({url: req.body.url, owner: userID, assignee: userID})
-      .then(function(link) {
-
-
+    global.Link.create({url: req.body.url, owner: userID, assignee: userID})
+      .then(function(link){
         res.sendStatus(201);
         //should we be sending back the link to user for any reason? 
       })
@@ -207,7 +207,7 @@ module.exports = {
   deleteLinks: function(req, res, next) {
     var userID = req.params.userid;
     //make sure we only delete the instance where owner AND assignee are the same
-    Link.findAll({
+    global.Link.findAll({
       where: {
         url: req.body.url,
         owner: userID,
@@ -232,9 +232,9 @@ module.exports = {
     console.log('goodbye damien');
     var userID = req.params.userid;
     //Below is how you access the 'friendship' table created by sequelize
-    User.find({
-      where: {fbid: userID},
-      include: [{model: User, as: 'friend'}],
+    global.User.find({
+      where:{fbid: userID},
+      include:[{model: User, as: 'friend'}],
     })
     .then(function(data) {
       var mappedFriends = data.friend.map(function(friend) {
@@ -247,9 +247,8 @@ module.exports = {
       var promiseArray = [];
       friendsArray.forEach(function(friend) {
         var updatedFriend = friend;
-
-        var promise = new Promise(function(resolve, reject) {
-          Link.findAll({
+        var promise = new Promise(function(resolve,reject){
+          global.Link.findAll({
             where: {owner: friend.fbid, assignee: friend.fbid}
           })
           .then(function(links) {
@@ -276,10 +275,9 @@ module.exports = {
 
   friendsGetNameOnly: function(req, res, next) {
     var userID = req.params.userid;
-    
-    User.find({
-      where: {fbid: userID},
-      include: [{model: User, as: 'friend'}],
+    global.User.find({
+      where:{fbid: userID},
+      include:[{model: User, as: 'friend'}],
     })
     .then((data) => {
       res.send(data.friend);
@@ -290,12 +288,12 @@ module.exports = {
     var userID = req.params.userid;
     var friendID = req.body.friend;
     
-    User.findOne({
-      where: {fbid: userID}
+    global.User.findOne({
+      where:{fbid: userID}
     })
-    .then(function(user) {
-      User.findOne({
-        where: {fbid: friendID}
+    .then(function(user){
+      global.User.findOne({
+        where:{fbid: friendID}
       })
       .then(function(friend) {
         user.addFriend(friend);
@@ -313,8 +311,8 @@ module.exports = {
     var friendID = req.params.friendid;
     var url = req.body.link;
 
-    Link.create({url: url, owner: friendID, assignee: userID})
-    .then(function(link) {
+    global.Link.create({url:url, owner:friendID, assignee:userID})
+    .then(function(link){
 
       res.send(link).sendStatus(201);
     });
@@ -324,7 +322,7 @@ module.exports = {
   searchFriends: function(req, res, next) {
     var search = req.params.friend;
 
-    User.findAll({
+    global.User.findAll({
       where: {
         fbid: search
       }
@@ -346,23 +344,23 @@ module.exports = {
     var likedLink = req.body.url;
     var linkOwner = req.body.owner;
   
-    Link.findOne({
+    global.Link.findOne({
       where: {
         url: likedLink,
         owner: linkOwner,
       }
-    })
-      .then(function(link) {
-        Like.findOne({
+      })
+      .then(function(link){
+        global.Like.findOne({
           where: {
             linkId: link.dataValues.id,
             userFbid: likedBy,
           }
         })
-        .then(function(like) {
-          if (like === null) {
-            Like.create()
-            .then(function(newLike) {
+        .then(function(like){
+          if(like === null) {
+            global.Like.create()
+            .then(function(newLike){
               newLike.setLink(link.dataValues.id);
               newLike.setUser(likedBy);
               res.sendStatus(200);
