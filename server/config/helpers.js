@@ -193,8 +193,8 @@ module.exports = {
     });
   },
   // add link to user // 
-  putLinks: function(req, res, next) {
-
+  putLinks: function(req, res, next){
+    console.log('Added link');
     var userID = req.params.userid;
 
     global.Link.create({url: req.body.url, owner: userID, assignee: userID})

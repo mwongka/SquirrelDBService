@@ -23,14 +23,19 @@ global.currentdb.DB.authenticate()
 
   global.User.findOne({
     where: {
-      fbname: 'FAKEPASSWORDSMSPVD'
+      fbname: 'ULTRAFAKE'
     }
   })
   .then(function(guy) {
-    // global.User.create({fbid:'TESTINGMULTIDBagain', fbname:'12345'})
-    // .then(function(user){
-    //   console.log(user);
-    // })
+    
+    global.Link.findOne({
+      where: {
+        owner:'JAKE'
+      }
+    }).then(function(link){
+      console.log('LINK',link);
+    })
+
    console.log(guy);
   })
   console.log('connected to db');
