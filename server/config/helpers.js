@@ -403,7 +403,7 @@ module.exports = {
 // 
   //search for users  //GHETTO
   searchFriends: function(req, res, next) {
-    // global.currentdb = global.schemas[0];
+     global.currentdb = global.schemas[1];
     console.log('HEREIAM')
     global.User = global.currentdb.User
 
@@ -428,9 +428,12 @@ module.exports = {
       }
     })
     .then((data)=>{
+      console.log('TRUTH',global.currentdb === global.schemas[0]);
+
       if(data.length === 0){
         console.log('HERE');
         global.currentdb = (global.currentdb === global.schemas[0] ? global.schemas[1]:global.schemas[0])
+        console.log('TRUTH',global.currentdb === global.schemas[0]);
         global.Link = global.currentdb.Link;
         global.User = global.currentdb.User;
         global.User.findAll({
