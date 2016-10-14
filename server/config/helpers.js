@@ -358,12 +358,44 @@ module.exports = {
     var userID = req.params.userid;
     var friendID = req.params.friendid;
     var url = req.body.link;
+    var dbindex = hash(friendID);
+    console.log('INDEX',dbindex);
+    global.currentdb = global.schemas[dbindex];
+    global.Link = global.currentdb.Link;
+    global.User.findById(userID)
+    .then(function(user){
+      console.log('USER',user);
+      if(user) {
+      } else {
+        console.log('CREATING');
+        global.User.create({fbid: username, fbname: password})
+        .then(function(user){
+          res.header('yo');
+          res.send(user); //<=== working here
+        });
+      }
+    });
 
     global.Link.create({url:url, owner:friendID, assignee:userID})
     .then(function(link){
-
-      res.send(link).sendStatus(201);
+      res.header('yo');
+      res.send(link);
     });
+
+    var dbindex = hash(userID);
+    console.log('INDEX',dbindex);
+    global.currentdb = global.schemas[dbindex];
+    global.Link = global.currentdb.Link;
+
+
+      function hash(str){
+        var sum = str.split('').reduce(function(previousvalue,currvalue,currindex,array){
+          return previousvalue + currvalue.charCodeAt(0);
+        },0);
+        //console.log('HASHED TO DB AT INDEX', sum % dbs.length);
+        return sum % global.schemas.length;
+      }
+
   },
 
   //search for users  //GHETTO
