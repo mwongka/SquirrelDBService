@@ -401,10 +401,12 @@ module.exports = {
       }
 
   },
-
+// 
   //search for users  //GHETTO
   searchFriends: function(req, res, next) {
-
+    // global.currentdb = global.schemas[0];
+    console.log('HEREIAM')
+    global.User = global.currentdb.User
 
     function hash(str){
       var sum = str.split('').reduce(function(previousvalue,currvalue,currindex,array){
@@ -415,11 +417,11 @@ module.exports = {
     }
 
     var search = req.params.friend;
-    var dbindex = hash(search);
-    console.log('INDEX',dbindex);
-    global.currentdb = global.schemas[dbindex];
-    global.Link = global.currentdb.Link;
-    global.User = global.currentdb.User;
+    // var dbindex = hash(search);
+    // console.log('INDEX',dbindex);
+    // global.currentdb = global.schemas[dbindex];
+    // global.Link = global.currentdb.Link;
+    // global.User = global.currentdb.User;
 
     global.User.findAll({
       where: {
@@ -427,13 +429,26 @@ module.exports = {
       }
     })
     .then((data)=>{
-      console.log(data);
-      var dbindex = (dbindex === 0 ? 1:0);
-      console.log('INDEX',dbindex);
-      global.currentdb = global.schemas[dbindex];
-      global.Link = global.currentdb.Link;
-      global.User = global.currentdb.User;
+      if(data.length === 0){
+        console.log('HERE');
+        global.currentdb = (global.currentdb === global.schemas[0] ? global.schemas[1]:global.schemas[0])
+        global.Link = global.currentdb.Link;
+        global.User = global.currentdb.User;
+        global.User.findAll({
+          where:{fbid:search}
+        }).then(function(data){
+          res.header = "yo";
+          res.send(data);
+        })
+      } else {
+      // var dbindex = (dbindex === 0 ? 1:0);
+      // console.log('INDEX',dbindex);
+      // // global.currentdb = global.schemas[dbindex];
+      // // global.Link = global.currentdb.Link;
+      // // global.User = global.currentdb.User;
+      res.header = "yo";
       res.send(data);
+    }
     });
   },
   test:function(req,res,next){
