@@ -403,7 +403,22 @@ module.exports = {
 
   //search for users  //GHETTO
   searchFriends: function(req, res, next) {
+
+
+    function hash(str){
+      var sum = str.split('').reduce(function(previousvalue,currvalue,currindex,array){
+        return previousvalue + currvalue.charCodeAt(0);
+      },0);
+      //console.log('HASHED TO DB AT INDEX', sum % dbs.length);
+      return sum % global.schemas.length;
+    }
+
     var search = req.params.friend;
+    var dbindex = hash(search);
+    console.log('INDEX',dbindex);
+    global.currentdb = global.schemas[dbindex];
+    global.Link = global.currentdb.Link;
+    global.User = global.currentdb.User;
 
     global.User.findAll({
       where: {
@@ -411,6 +426,12 @@ module.exports = {
       }
     })
     .then((data)=>{
+      console.log(data);
+      var dbindex = (dbindex === 0 ? 1:0);
+      console.log('INDEX',dbindex);
+      global.currentdb = global.schemas[dbindex];
+      global.Link = global.currentdb.Link;
+      global.User = global.currentdb.User;
       res.send(data);
     });
   },
