@@ -335,8 +335,9 @@ module.exports = {
                 global.Tag = global.currentdb.Tag
               }
               global.User.create({fbid: friend.dataValues.fbid, fbname: friend.dataValues.fbid})
-              .then(function(user){
+              .then(function(createdFriend){
                 console.log('Created',user); //<=== working here
+                user.addFriend(createdFriend);
                 res.end('Created and friended');
               });
 
