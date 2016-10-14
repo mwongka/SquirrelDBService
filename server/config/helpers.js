@@ -19,7 +19,7 @@ module.exports = {
   getMostRecent: function(req, res, next) {
     // console.log('testtest!>>>>>>>>>>>>>>>>>>>>>>>>>');
 
-    Link.findAll({limit: 60, order: 'createdAt DESC'})
+    global.Link.findAll({limit: 60, order: 'createdAt DESC'})
       .then(function(data) {
         console.log('give me redis data!');
         res.send(data);
