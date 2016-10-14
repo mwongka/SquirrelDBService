@@ -336,16 +336,19 @@ module.exports = {
               }
               global.User.create({fbid: friend.dataValues.fbid, fbname: friend.dataValues.fbid})
               .then(function(createdFriend){
-                console.log('Created',user); //<=== working here
+                console.log('USER',user);
+                console.log('Created',createdFriend); //<=== working here
                 user.addFriend(createdFriend);
                 res.end('Created and friended');
               });
 
           });
-        }
-        console.log('FRIEND IS',friend)
+        } else {
+        console.log('user',user);
+        // console.log('FRIEND IS',friend)
         user.addFriend(friend);
         res.sendStatus(201);
+      }
       });
     });  
   },
