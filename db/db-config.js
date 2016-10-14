@@ -48,7 +48,7 @@ connections.forEach(function(db){
 //console.log('here');
 if(global.currentdb === undefined){
   console.log('REDEFINED');
-  global.currentdb = global.schemas[1];
+  global.currentdb = global.schemas[0];
  // console.log(global.schemas[0]);
 }
 

@@ -104,14 +104,14 @@ as well as to add relational sequelize methods to it's model instances!
 A few intances will be created every time to test the database */
     // COMMENT THIS OUT LATER
 
-      // db.sync({force: true})
+      // global.currentdb.DB.sync({force: true})
       //   .then(function(){
       //     console.log('sycn success!');
-      //     User.create({fbid: '928374', fbname: 'Michael Wong'})
+      //     global.User.create({fbid: '928374', fbname: 'Michael Wong'})
       //       .then(function(user){
-      //         User.create({fbid: 'ast294r', fbname:'Squirrel'})
+      //         global.User.create({fbid: 'ast294r', fbname:'Squirrel'})
       //         .then(function(user2){
-      //           user.addFriend(user2);
+      //           // global.user.addFriend(user2);
       //           // Link.create({url:"www.test.com", owner:user.fbid, assignee:user2.fbid})
       //           // .then(function(link){
       //           //   console.log('link saved!');

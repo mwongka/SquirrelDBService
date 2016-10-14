@@ -293,11 +293,56 @@ module.exports = {
     global.User.findOne({
       where:{fbid: userID}
     })
-    .then(function(user){
+    .then(function(user){   
       global.User.findOne({
         where:{fbid: friendID}
       })
       .then(function(friend) {
+        if(friend===null){
+          console.log('INSIDE',friendID)
+          //add friend to DB, and add friendslinks
+          if(global.currentdb === global.schemas[0]){
+            global.currentdb = global.schemas[1];
+            global.Link = global.currentdb.Link
+            global.User = global.currentdb.User
+            global.Category = global.currentdb.Category
+            global.Like = global.currentdb.Like
+            global.Tag = global.currentdb.Tag
+          } else {
+            global.currentdb = global.schemas[0];
+            global.Link = global.currentdb.Link
+            global.User = global.currentdb.User
+            global.Category = global.currentdb.Category
+            global.Like = global.currentdb.Like
+            global.Tag = global.currentdb.Tag
+          }
+          global.User.findOne({
+            where:{fbid: friendID}
+          }).then(function(friend){
+              if(global.currentdb === global.schemas[0]){
+                global.currentdb = global.schemas[1];
+                global.Link = global.currentdb.Link
+                global.User = global.currentdb.User
+                global.Category = global.currentdb.Category
+                global.Like = global.currentdb.Like
+                global.Tag = global.currentdb.Tag
+              } else {
+                global.currentdb = global.schemas[0];
+                global.Link = global.currentdb.Link
+                global.User = global.currentdb.User
+                global.Category = global.currentdb.Category
+                global.Like = global.currentdb.Like
+                global.Tag = global.currentdb.Tag
+              }
+              global.User.create({fbid: friend.dataValues.fbid, fbname: friend.dataValues.fbid})
+              .then(function(user){
+                console.log('Created',user); //<=== working here
+                res.end('Created and friended');
+              });
+
+          });
+        }
+        console.log('FRIEND IS',friend)
         user.addFriend(friend);
         res.sendStatus(201);
       });
